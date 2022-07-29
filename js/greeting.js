@@ -1,4 +1,5 @@
-const loginForm = document.querySelector(".login-form");
+const loginForm = document.querySelector("#login-form");
+const loginFormContainer = document.querySelector("#login-form__container");
 const loginInput = loginForm.querySelector("input");
 const loginButton = loginForm.querySelector("button");
 const greeting = document.querySelector("#greeting");
@@ -10,7 +11,7 @@ function onLoginSubmit(event) {
   event.preventDefault();
   const username = loginInput.value;
   localStorage.setItem(USERNAME_KEY, username);
-  loginForm.classList.add(HIDDEN_CLASSNAME);
+  loginFormContainer.classList.add(HIDDEN_CLASSNAME);
   paintGreeting(username);
 }
 
@@ -22,7 +23,7 @@ function paintGreeting(username) {
 const savedUsername = localStorage.getItem(USERNAME_KEY);
 
 if (savedUsername === null) {
-  loginForm.classList.remove(HIDDEN_CLASSNAME);
+  loginFormContainer.classList.remove(HIDDEN_CLASSNAME);
   loginForm.addEventListener("submit", onLoginSubmit);
 } else {
   paintGreeting(savedUsername);

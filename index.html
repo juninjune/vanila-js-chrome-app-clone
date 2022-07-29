@@ -5,37 +5,62 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Momentum</title>
+    <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <form class="login-form hidden">
-      <input
-        required
-        maxlength="15"
-        type="text"
-        placeholder="What is you name?"
-      />
-      <button type="submit" value="Login">Log In</button>
-    </form>
-    <h2 id="clock">00:00:00</h2>
-    <h1 id="greeting" class="hidden"></h1>
-    <form id="todo-form">
-      <input type="text" placeholder="Write a To do and Press Enter." />
-    </form>
-    <ul id="todo-list"></ul>
-    <div id="quote">
-      <span></span>
-      <span></span>
+    <div class="main-page">
+      <div class="main-page__row">
+        <h2 id="clock">00:00:00</h2>
+      </div>
+
+      <div class="main-page__row">
+        <div id="login-form__container" class="hidden">
+          <form id="login-form">
+            <input
+              required
+              maxlength="11"
+              type="text"
+              placeholder="Your name."
+            />
+            <button type="submit" value="Login">
+              <i class="fa-solid fa-check fa-2x"></i>
+            </button>
+          </form>
+        </div>
+        <h1 id="greeting" class="hidden"></h1>
+        <form id="todo-form">
+          <input type="text" placeholder="Write Todo, Press Enter." />
+        </form>
+        <ul id="todo-list"></ul>
+      </div>
+      <div class="main-page__row">
+        <div id="quote">
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <div id="weather">
+        <span></span>
+        <span></span>
+      </div>
+      <div id="full-quote__container" class="hidden">
+        <div id="full-quote">
+          <span></span>
+          <span></span>
+        </div>
+      </div>
     </div>
-    <div id="weather">
-      <span></span>
-      <span></span>
-    </div>
+
     <script src="js/greeting.js"></script>
     <script src="js/clock.js"></script>
     <script src="js/quotes.js"></script>
     <script src="js/background.js"></script>
     <script src="js/todo.js"></script>
     <script src="js/weather.js"></script>
+    <script
+      src="https://kit.fontawesome.com/79587e9eed.js"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
