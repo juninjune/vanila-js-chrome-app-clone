@@ -3,7 +3,7 @@ const rightArrow = document.querySelector(".apps__right-arrow");
 
 const apps = document.getElementsByClassName("app");
 
-let currentAppIndex = 2;
+let currentAppIndex = 0;
 
 function handleLeftClick() {
   console.log(currentAppIndex);
