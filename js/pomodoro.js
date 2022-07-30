@@ -14,6 +14,11 @@ const pomodoroPlayingContainer = document.querySelector(
 const pomodoroTitle = document.querySelector(".pomodoro-playing__task-name");
 const pomodoroTime = document.querySelector(".pomodoro-playing__time");
 const pomodoroPause = document.querySelector(".pomodoro-playing__pause");
+const pomodoroPauseSpan = document.querySelector(
+  ".pomodoro-playing__pause span i"
+);
+
+const alarmSound = new Audio("sounds/ding.mp3");
 
 console.log(pomodoroForm);
 
@@ -34,19 +39,83 @@ function onPomodoroSubmit(event) {
     .toString()
     .padStart(2, "0")}:00`;
 
-  startPomodoro(focusTimeInput.value, restTimeInput.value);
+  focusTime = focusTimeInput.value;
+  restTime = restTimeInput.value;
+  startPomodoro();
 
   pomodoroPlayingContainer.classList.remove("hidden");
   pomodoroFormContainer.classList.add("hidden");
 }
 
-let timer;
-let remainFocusTime;
-let remainRestTime;
+function onPauseResumeClicked() {
+  if (!isPaused) {
+    pausePomodoro();
+    isPaused = true;
+  } else {
+    resumePomodoro();
+    isPaused = false;
+  }
+}
 
-function startPomodoro(focusTime, restTime) {
-  remainFocusTime = focusTime;
-  timer = setInterval(() => {}, 1000);
+let focusTime;
+let restTime;
+
+let timer;
+let remainFocusSeconds;
+let remainRestSeconds;
+let isFocusing;
+let isPaused = false;
+
+function startPomodoro() {
+  remainFocusSeconds = focusTime * 60;
+  remainRestSeconds = 0;
+  isFocusing = true;
+  paintTimer();
+}
+
+function pausePomodoro() {
+  clearInterval(timer);
+  pomodoroPauseSpan.classList.remove("fa-pause");
+  pomodoroPauseSpan.classList.add("fa-play");
+}
+
+function resumePomodoro() {
+  pomodoroPauseSpan.classList.remove("fa-play");
+  pomodoroPauseSpan.classList.add("fa-pause");
+  paintTimer();
+}
+
+function paintTimer() {
+  timer = setInterval(() => {
+    if (isFocusing) {
+      remainFocusSeconds--;
+      pomodoroTime.innerText = `${Math.floor(remainFocusSeconds / 60)
+        .toString()
+        .padStart(2, "0")}:${(remainFocusSeconds % 60)
+        .toString()
+        .padStart(2, "0")}`;
+      if (remainFocusSeconds === 0) {
+        remainRestSeconds = restTime * 60;
+        pomodoroTitle.innerText = "휴식";
+        alarmSound.play();
+        isFocusing = false;
+      }
+    } else {
+      remainRestSeconds--;
+      pomodoroTime.innerText = `${Math.floor(remainRestSeconds / 60)
+        .toString()
+        .padStart(2, "0")}:${(remainRestSeconds % 60)
+        .toString()
+        .padStart(2, "0")}`;
+      if (remainRestSeconds === 0) {
+        remainFocusSeconds = focusTime * 60;
+        pomodoroTitle.innerText = taskNameInput.value;
+        alarmSound.play();
+        isFocusing = true;
+      }
+    }
+  }, 1000);
 }
 
 pomodoroForm.addEventListener("submit", onPomodoroSubmit);
+pomodoroPause.addEventListener("click", onPauseResumeClicked);
